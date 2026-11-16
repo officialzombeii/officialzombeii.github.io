@@ -781,6 +781,7 @@ button.off { background: rgba(255, 59, 48, 0.15); border-color: var(--red); colo
 .feed .cat.Blue { background: var(--blue); }
 .feed .cat.Drs { background: var(--green); }
 .feed .cat.TrackLimits { background: var(--purple); }
+.feed .cat.RedFlag { background: var(--red); }
 
 /* "On track – recovery": obstacles and the crews of the Race Director (ui.js renderTrackJobs) */
 .jobs { flex: none; max-height: 132px; margin: 0; padding: 0; overflow: auto; list-style: none; }
@@ -1076,11 +1077,19 @@ select.invalid { border-color: var(--red); color: #ff8079; }
 .packs-card { margin-top: 18px; }
 .packs-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
 .packs-head > div:first-child { display: flex; flex-direction: column; gap: 8px; flex: 1 1 420px; }
-.packs-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.packs-actions { display: grid; grid-template-columns: 1fr 1fr; flex-wrap: wrap; gap: 8px; align-items: center; width: fit-content;}
+.packs-actions > :first-child { grid-column: 1 /-1; width: 100%; box-sizing: border-box; text-align: center;}
 .packs-actions .file-btn { padding: 9px 14px; }
 .packs-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 8px; }
 a.button-link { display: inline-block; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 700; }
 a.button-link.button-primary { background: var(--accent); border-color: var(--accent); color: #ffffff; }
 a.button-link.button-primary:hover { background: #ff2a1f; }
+a.button-link-store { grid-column: 1 / -1; width: 100%; display: inline-block; padding: 13px 24px; border-radius: 8px; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 900; }
+a.button-link-store.button-primary { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+a.button-link-store.button-primary:hover { background: #ff2a1f; }
+a.button-link-store.disabled,
+a.button-link-store[aria-disabled="true"],
+a.button-link-store.button-primary.disabled,
+a.button-link-store.button-primary[aria-disabled="true"] { pointer-events: none; opacity: 0.6; cursor: not-allowed; }
 a.inline-link { color: #ff6a62; text-decoration: none; font-weight: 600; }
 a.inline-link:hover { text-decoration: underline; }

@@ -30,14 +30,14 @@ const GEO_FEATURES = {
   nurburgring: "de-1927", mugello: "it-1914", portimao: "pt-2008", istanbul: "tr-2005", sochi: "ru-2014",
   hockenheimring: "de-1932", ricard: "fr-1969", magny_cours: "fr-1960", sepang: "my-1999", buddh: "in-2011",
   yeongam: "kr-2010", valencia: "va-2008", indianapolis: "us-1909", fuji: "jp-1966", estoril: "pt-1972",
-  jerez: "es-1985", adelaide: "au-1985", phoenix: "us-1989", detroit: "us-1982", kyalami: "za-1961"
+  jerez: "es-1985", adelaide: "au-1985", phoenix: "us-1989", detroit: "us-1982", kyalami: "za-1961", laguna: "ls-0001",
 };
 
 // Direction of the race on circuits that are not in the built-in pack
 const RACE_DIRECTION = {
   nurburgring: "cw", mugello: "cw", portimao: "cw", istanbul: "ccw", sochi: "cw", hockenheimring: "cw",
   ricard: "cw", magny_cours: "cw", buddh: "cw", yeongam: "ccw", valencia: "cw", indianapolis: "cw",
-  fuji: "cw", estoril: "cw", jerez: "cw", kyalami: "cw"
+  fuji: "cw", estoril: "cw", jerez: "cw", kyalami: "cw", adelaide: "cw", laguna: "ccw",
 };
 
 // What the cars need on these circuits (0 ... 1, like CIRCUIT_CHARACTER) – an estimate
@@ -370,7 +370,7 @@ function buildSeasonData() {
     if (c.core) continue;
     c.character = Object.assign({ short: c.location, power: 0.5, downforce: 0.6, tyres: 0.6, overtaking: 0.5, street: 0, rain: 0.2, air: 22, wind: 0.4 },
       CHARACTER_DEFAULTS[c.jolpicaId] || {});
-    c.layoutOptions = { feature: GEO_FEATURES[c.jolpicaId] || null, direction: RACE_DIRECTION[c.jolpicaId] || "file", startOffset: 0, pitLaneLength: 380 };
+    c.layoutOptions = { feature: GEO_FEATURES[c.jolpicaId] || null, direction: RACE_DIRECTION[c.jolpicaId] || "file", startOffset: 0, pitLaneLength: 395 };
   }
 }
 
@@ -462,6 +462,7 @@ async function loadGeo() {
   if (!res.ok) throw new Error("GeoJSON: " + res.status);
   B.geo = await res.json();
   log(B.geo.features.length + " circuit layouts loaded.", "ok");
+  log(B.geo)
   return B.geo;
 }
 
@@ -1126,7 +1127,7 @@ function renderLayouts() {
   }).join("");
   $("layoutEditor").innerHTML = `
     <div class="builder-fields">
-      <label class="wide">Layout <select id="lyFeature"><option value="">– none –</option>${options}</select></label>
+      <!-- VORERST ENTFERNT <label class="wide">Layout <select id="lyFeature"><option value="">– none –</option>${options}</select></label> -->
       <label>&nbsp;<button id="lyOsm" title="Look for the race track around the circuit in OpenStreetMap">Search OpenStreetMap</button></label>
       <label title="A lap of the circuit as GeoJSON, GPX or KML – e.g. drawn on geojson.io">&nbsp;<span class="file-btn">Load a layout file<input type="file" id="lyFile" accept=".geojson,.json,.gpx,.kml,application/json,application/gpx+xml"></span></label>
       <label>Direction of the race

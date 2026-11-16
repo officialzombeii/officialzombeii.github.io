@@ -21,11 +21,6 @@
 //  DRS (2023–2025) or Overtake Mode (2026).
 // =====================================================================
 
-const REGS_INFO = {
-  GE2023:  { name: "2011-2025 · DRS + non hybrid", short: "2011–25", aid: "DRS" },
-  GEN2026: { name: "2026 · active aero + 50/50 hybrid", short: "2026", aid: "Overtake Mode" }
-};
-
 
 function is2026() {
   return !!race && race.regs === "GEN2026";

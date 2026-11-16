@@ -234,7 +234,8 @@ function simulatePractice(s, round, type, track) {
   let ideal = 0;
   for (const v of track.profile) ideal += track.ds / Math.max(5, v);
   // the track gets faster, the teams turn the engines up: FP3 ≈ 0.5 % off the pole time
-  const progress = { FP1: 1.01, FP2: 1.004, FP3: 1.0 }[type];
+  // The fastest of many noisy FP3 laps is biased low; keep it close to the intended gap to pole.
+  const progress = { FP1: 1.01, FP2: 1.004, FP3: 1.0025 }[type];
   // rubber on the track (engine.js RUBBER_*): a rain-washed track is slower than usual
   const rubberStart = (round.rubber !== undefined ? round.rubber : RUBBER_START) * (1 - 0.7 * (wetShare > 0 && weatherConditions(W, start).rain > 0.12 ? 1 : 0));
   const rubberPace = 1 - RUBBER_PACE * (rubberStart - RUBBER_EXPECTED[type]);

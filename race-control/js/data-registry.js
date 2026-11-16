@@ -158,6 +158,14 @@ function rebuildCatalogue() {
       Object.assign(t.years, src.years);
     }
   }
+  // Rebuild the track editor to reflect the new catalogue (the editor only shows circuits that have a layout)
+  try {
+    if (typeof(initTrackEditor()) === typeof(Function)) initTrackEditor();
+  } catch (e) {
+    sleep(100).then(() => {
+      try { if (typeof(initTrackEditor()) === typeof(Function)) initTrackEditor(); } catch (e) {}
+    });
+  }
 
   // the years that have a calendar (base seasons for a new championship)
   const years = new Set();

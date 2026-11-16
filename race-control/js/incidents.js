@@ -117,12 +117,14 @@ function recoveryRate(ob) {
     // the medical car only goes out under a Safety Car or a red flag
     if (st === "RED") return 2;
     if (st === "SC" || st === "SC_ENDING") return 1.2;
+    if (r.chequered || r.q.state === "CHEQUERED") return 0.9;
     return 0;
   }
   if (ob.type === "BARRIER") {
     if (st === "RED") return 2.2;
     if (st === "SC" || st === "SC_ENDING") return 0.6;
     if (st === "VSC" || st === "VSC_ENDING") return 0.3;
+    if (r.chequered || r.q.state === "CHEQUERED") return 0.9;
     return 0;
   }
   if (st === "RED") return 2.2;
@@ -130,6 +132,7 @@ function recoveryRate(ob) {
   if (st === "VSC" || st === "VSC_ENDING") return 1.0;
   if (flag === "DOUBLE") return ob.onTrack ? 0.55 : 1.0;
   if (flag === "YELLOW") return ob.onTrack ? 0 : 0.8;
+  if(r.chequered || r.q.state === "CHEQUERED") return 0.9;
   return 0;
 }
 
@@ -138,7 +141,7 @@ function adequateMeasure(ob) {
   const r = race;
   const st = r.status;
   const flag = shownFlag(ob.sector - 1);
-  if (ob.type === "BARRIER" || ob.type === "MEDICAL") return st === "SC" || st === "SC_ENDING" || st === "RED";
+  if (ob.type === "BARRIER" || ob.type === "MEDICAL") return st === "SC" || st === "SC_ENDING" || st === "RED" || r.chequered;
   if (["VSC", "VSC_ENDING", "SC", "SC_ENDING", "RED"].includes(st)) return true;
   if (ob.onTrack) return flag === "DOUBLE";
   return flag !== "GREEN";

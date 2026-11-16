@@ -267,7 +267,8 @@ function redFlag() {
     car.passing = null;
     car.unlapping = false;
   }
-  publish("RED FLAG", "Flag");
+  publish("RED FLAG", "RedFlag");
+  publish("SESSION STOPPED", "RedFlag")
   publish("PIT EXIT CLOSED", "Info");
 }
 

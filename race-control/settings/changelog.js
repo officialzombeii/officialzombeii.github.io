@@ -5,9 +5,23 @@
 //   - CHANGELOG: newest first; every entry has a version, a date (YYYY-MM-DD) and a list of changes
 // =====================================================================
 
-const APP_VERSION = "0.9.2";
+const APP_VERSION = "0.9.3";
 
 const CHANGELOG = [
+    {
+    version: "0.9.3", date: "2026-11-16",
+    changes: [
+      "Track Editor - edit Data Pack Tracks aswell",
+      "Added new tracks: Adelaide",
+      "Rain flags are now displayed below all flags",
+      "Red flag message color has been changed from yellow to red",
+      "Removed layout selection in data track builder",
+      "Added SESSION STOPPED message for red flags",
+      "Recalibrated Sotchi to match real pace better",
+      "BUGFIX: Able to send medical cars after the end of a session",
+      "BUGFIX: Chequered flag is now shown correctly after the end of a practice/quali session",
+    ]
+  },
   {
     version: "0.9.2", date: "2026-11-12",
     changes: [

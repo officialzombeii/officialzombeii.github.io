@@ -539,7 +539,8 @@ function qualiRedFlag() {
       car.q.phase = "COOL";
     }
   }
-  publish("RED FLAG", "Flag");
+  publish("RED FLAG", "RedFlag");
+  publish("SESSION STOPPED", "RedFlag")
   publish("PIT EXIT CLOSED", "Info");
   addAlert("info", "The session clock is stopped at " + formatClock(r.q.remaining).slice(2) + ". All cars return to the pits.");
 }

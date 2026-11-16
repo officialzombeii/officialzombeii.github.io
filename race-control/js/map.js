@@ -225,20 +225,33 @@ function drawTrackLayers(view, r, options) {
   strokeSegment(view, 0, L, COLOURS.tarmac, options.width);
   if (isCellWeather(r)) drawSectorWetness(view, r); // championship: where is the track wet?
 
-  // 3. track status over the whole lap
-  const st = r.status;
-  if (st === "SC" || st === "SC_ENDING") strokeSegment(view, 0, L, COLOURS.sc, options.width, null, true);
-  else if (st === "VSC" || st === "VSC_ENDING") strokeSegment(view, 0, L, COLOURS.yellow, options.width, [12, 9], true);
-  else if (st === "RED") strokeSegment(view, 0, L, COLOURS.red, options.width, null, true);
-  if (r.chequered) strokeSegment(view, 0, L, COLOURS.white, options.width * 0.6, [6, 6]);
-
-  // 4. marshal sectors with flags
+  // extra flag check for the rain flag 
   for (let i = 0; i < M; i++) {
     const from = i * tr.msLen;
     const to = (i + 1) * tr.msLen;
     const flag = view.track === r.track && r.flagPanels ? shownFlag(i) : r.sectorFlags[i];
     // rain signal: a blue band (wider, under a yellow flag – both stay visible)
     if (r.rainFlags && r.rainFlags[i]) strokeSegment(view, from, to, COLOURS.rain, options.width + (flag === "GREEN" ? 2 : 9), null, true);
+
+    const chosen = i === selectedSector || selectedSectors.includes(i);
+    if (options.interactive && (i === hoverSector || chosen)) {
+      strokeSegment(view, from, to, chosen ? "#ffffff" : "rgba(255,255,255,0.45)", 2, chosen ? null : [4, 4]);
+    }
+  }
+
+  // 3. track status over the whole lap
+  const st = r.status;
+  if (st === "SC" || st === "SC_ENDING") strokeSegment(view, 0, L, COLOURS.sc, options.width, null, true);
+  else if (st === "VSC" || st === "VSC_ENDING") strokeSegment(view, 0, L, COLOURS.yellow, options.width, [12, 9], true);
+  else if (st === "RED") strokeSegment(view, 0, L, COLOURS.red, options.width, null, true);
+  if (r.chequered) strokeSegment(view, 0, L, COLOURS.white, options.width * 0.6, [6, 6]);
+  if (r.q && r.q.state === "CHEQUERED") strokeSegment(view, 0, L, COLOURS.white, options.width * 0.6, [6, 6]);
+
+  // 4. marshal sectors with flags
+  for (let i = 0; i < M; i++) {
+    const from = i * tr.msLen;
+    const to = (i + 1) * tr.msLen;
+    const flag = view.track === r.track && r.flagPanels ? shownFlag(i) : r.sectorFlags[i];
     if (flag === "YELLOW") strokeSegment(view, from, to, COLOURS.yellow, options.width + 2, null, true);
     if (flag === "DOUBLE") strokeSegment(view, from, to, COLOURS.double, options.width + 5, null, true);
     if (r.slippery[i]) {
